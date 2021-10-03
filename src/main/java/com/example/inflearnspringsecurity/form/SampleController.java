@@ -2,12 +2,16 @@ package com.example.inflearnspringsecurity.form;
 
 import com.example.inflearnspringsecurity.account.AccountContext;
 import com.example.inflearnspringsecurity.account.AccountRepository;
+import com.example.inflearnspringsecurity.common.SecurityLogger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.security.Principal;
+import java.util.concurrent.Callable;
 
 @Controller
 public class SampleController {
@@ -50,5 +54,19 @@ public class SampleController {
     public String user(Model model, Principal principal) {
         model.addAttribute("message", "Hello User, " + principal.getName());
         return "user";
+    }
+
+    @GetMapping("/async-handler")
+    @ResponseBody
+    public Callable<String> asyncHandler() {
+        SecurityLogger.log("MVC");
+
+        return new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                SecurityLogger.log("Callable");
+                return "Async Handler";
+            }
+        };
     }
 }
