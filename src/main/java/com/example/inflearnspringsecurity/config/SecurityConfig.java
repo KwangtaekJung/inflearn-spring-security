@@ -63,6 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDecisionManager(accessDecisionManager())
                 .and()
             .formLogin()
+                .loginPage("/login")
+                .permitAll()
                 .and()
             .httpBasic();
 
