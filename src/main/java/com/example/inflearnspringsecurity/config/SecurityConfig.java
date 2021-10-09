@@ -99,6 +99,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             }
                         });
 
+        http.rememberMe()
+                .userDetailsService(accountService)
+                .key("remember-me-sample");
+
         http.logout().logoutSuccessUrl("/");
 
         SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
