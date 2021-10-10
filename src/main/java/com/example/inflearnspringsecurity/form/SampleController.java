@@ -3,6 +3,7 @@ package com.example.inflearnspringsecurity.form;
 import com.example.inflearnspringsecurity.account.Account;
 import com.example.inflearnspringsecurity.account.AccountContext;
 import com.example.inflearnspringsecurity.account.AccountRepository;
+import com.example.inflearnspringsecurity.book.BookRepository;
 import com.example.inflearnspringsecurity.common.CurrentUser;
 import com.example.inflearnspringsecurity.common.SecurityLogger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class SampleController {
 
     @Autowired
     AccountRepository accountRepository;
+
+    @Autowired
+    BookRepository bookRepository;
 
 //    @GetMapping("/")
 //    public String index(Model model, Principal principal) {
@@ -67,6 +71,7 @@ public class SampleController {
     @GetMapping("/user")
     public String user(Model model, Principal principal) {
         model.addAttribute("message", "Hello User, " + principal.getName());
+        model.addAttribute("books", bookRepository.findCurrentUserBooks());
         return "user";
     }
 
