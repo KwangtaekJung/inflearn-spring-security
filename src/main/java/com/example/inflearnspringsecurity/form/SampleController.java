@@ -1,7 +1,9 @@
 package com.example.inflearnspringsecurity.form;
 
+import com.example.inflearnspringsecurity.account.Account;
 import com.example.inflearnspringsecurity.account.AccountContext;
 import com.example.inflearnspringsecurity.account.AccountRepository;
+import com.example.inflearnspringsecurity.common.CurrentUser;
 import com.example.inflearnspringsecurity.common.SecurityLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,20 +23,32 @@ public class SampleController {
     @Autowired
     AccountRepository accountRepository;
 
+//    @GetMapping("/")
+//    public String index(Model model, Principal principal) {
+//        if (principal == null) {
+//            model.addAttribute("message", "Hello Spring Security");
+//        } else {
+//            model.addAttribute("message", "Hello " + principal.getName());
+//        }
+//        return "index";
+//    }
+
     @GetMapping("/")
-    public String index(Model model, Principal principal) {
-        if (principal == null) {
+    public String index(Model model, @CurrentUser Account account) {
+        if (account == null) {
             model.addAttribute("message", "Hello Spring Security");
         } else {
-            model.addAttribute("message", "Hello " + principal.getName());
+            model.addAttribute("message", "Hello " + account.getUsername());
         }
         return "index";
     }
+
     @GetMapping("/info")
     public String info(Model model) {
         model.addAttribute("message", "info");
         return "info";
     }
+
     @GetMapping("/dashboard")
     public String dashboard(Model model, Principal principal) {
         model.addAttribute("message", "Hello, " + principal.getName());
@@ -43,6 +57,7 @@ public class SampleController {
 
         return "dashboard";
     }
+
     @GetMapping("/admin")
     public String admin(Model model, Principal principal) {
         model.addAttribute("message", "Hello Admin, " + principal.getName());

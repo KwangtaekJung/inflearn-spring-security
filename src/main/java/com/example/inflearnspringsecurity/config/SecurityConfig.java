@@ -106,9 +106,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             }
                         });
 
-        http.rememberMe()
-                .userDetailsService(accountService)
-                .key("remember-me-sample");
+        // UserAccont와 같이 사용 시 Unique index or primary key violation 발생하여 주석 처리함.
+//        http.rememberMe()
+//                .userDetailsService(accountService)
+//                .key("remember-me-sample");
 
         http.logout().logoutSuccessUrl("/");
 
